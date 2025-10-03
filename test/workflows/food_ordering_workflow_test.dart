@@ -47,10 +47,9 @@ void main() {
     });
 
     testWidgets('should successfully complete ordering workflow', (tester) async {
-      // Arrange
       await tester.pumpWidget(testWidget);
       final context = tester.element(find.text('Test Widget'));
-      
+
       final workflow = FoodOrderingWorkflow(
         restaurantRepository: mockRestaurantRepository,
         context: context,
@@ -67,7 +66,6 @@ void main() {
         available: true,
       );
 
-      // Mock successful order placement
       when(mockOrderService.processPayment(any))
           .thenAnswer((_) async => Future.value());
       when(mockOrderService.placeOrder(any))
@@ -87,25 +85,20 @@ void main() {
                 estimatedDeliveryTime: DateTime.now().add(const Duration(minutes: 30)),
               ));
 
-      // Act
       final result = await workflow.startOrderingWorkflow(
         restaurantId: 'restaurant_1',
         selectedItems: [testMenuItem],
       );
 
-      // Assert
-      expect(result, isFalse); // Will be false due to navigation in test environment
-      
-      // Verify cart was updated
+      expect(result, isFalse);
       expect(cartBloc.state.items.length, equals(1));
       expect(cartBloc.state.items.first.menuItem.id, equals('item_1'));
     });
 
     testWidgets('should handle errors gracefully', (tester) async {
-      // Arrange
       await tester.pumpWidget(testWidget);
       final context = tester.element(find.text('Test Widget'));
-      
+
       final workflow = FoodOrderingWorkflow(
         restaurantRepository: mockRestaurantRepository,
         context: context,
@@ -120,22 +113,18 @@ void main() {
         available: true,
       );
 
-      // Mock payment failure
       when(mockOrderService.processPayment(any))
           .thenThrow(Exception('Payment failed'));
 
-      // Act
       final result = await workflow.startOrderingWorkflow(
         restaurantId: 'restaurant_1',
         selectedItems: [testMenuItem],
       );
 
-      // Assert
       expect(result, isFalse);
     });
 
     test('should add multiple items to cart correctly', () {
-      // Arrange
       final testMenuItem1 = MenuItem(
         id: 'item_1',
         sectionId: 'section_1',
@@ -154,13 +143,106 @@ void main() {
         available: true,
       );
 
-      // Act
       cartBloc.add(AddItemToCartEvent(menuItem: testMenuItem1));
       cartBloc.add(AddItemToCartEvent(menuItem: testMenuItem2));
 
-      // Assert
       expect(cartBloc.state.items.length, equals(2));
       expect(cartBloc.state.subtotal, equals(21.98));
+    });
+
+    testWidgets('should reject empty restaurant ID', (tester) async {
+      await tester.pumpWidget(testWidget);
+      final context = tester.element(find.text('Test Widget'));
+
+      final workflow = FoodOrderingWorkflow(
+        restaurantRepository: mockRestaurantRepository,
+        context: context,
+      );
+
+      final testMenuItem = MenuItem(
+        id: 'item_1',
+        sectionId: 'section_1',
+        restaurantId: 'restaurant_1',
+        name: 'Test Pizza',
+        price: 12.99,
+        available: true,
+      );
+
+      final result = await workflow.startOrderingWorkflow(
+        restaurantId: '',
+        selectedItems: [testMenuItem],
+      );
+
+      expect(result, isFalse);
+    });
+
+    testWidgets('should reject empty items list', (tester) async {
+      await tester.pumpWidget(testWidget);
+      final context = tester.element(find.text('Test Widget'));
+
+      final workflow = FoodOrderingWorkflow(
+        restaurantRepository: mockRestaurantRepository,
+        context: context,
+      );
+
+      final result = await workflow.startOrderingWorkflow(
+        restaurantId: 'restaurant_1',
+        selectedItems: [],
+      );
+
+      expect(result, isFalse);
+    });
+
+    testWidgets('should reject unavailable items', (tester) async {
+      await tester.pumpWidget(testWidget);
+      final context = tester.element(find.text('Test Widget'));
+
+      final workflow = FoodOrderingWorkflow(
+        restaurantRepository: mockRestaurantRepository,
+        context: context,
+      );
+
+      final unavailableItem = MenuItem(
+        id: 'item_1',
+        sectionId: 'section_1',
+        restaurantId: 'restaurant_1',
+        name: 'Unavailable Pizza',
+        price: 12.99,
+        available: false,
+      );
+
+      final result = await workflow.startOrderingWorkflow(
+        restaurantId: 'restaurant_1',
+        selectedItems: [unavailableItem],
+      );
+
+      expect(result, isFalse);
+    });
+
+    testWidgets('should reject items with invalid price', (tester) async {
+      await tester.pumpWidget(testWidget);
+      final context = tester.element(find.text('Test Widget'));
+
+      final workflow = FoodOrderingWorkflow(
+        restaurantRepository: mockRestaurantRepository,
+        context: context,
+      );
+
+      final invalidItem = MenuItem(
+        id: 'item_1',
+        sectionId: 'section_1',
+        restaurantId: 'restaurant_1',
+        name: 'Invalid Pizza',
+        price: -5.0,
+        available: true,
+      );
+
+      final result = await workflow.startOrderingWorkflow(
+        restaurantId: 'restaurant_1',
+        selectedItems: [invalidItem],
+      );
+
+      expect(result, isFalse);
     });
   });
 }

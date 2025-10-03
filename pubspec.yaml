@@ -20,6 +20,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   equatable: ^2.0.5
   mockito: ^5.4.4
+  supabase_flutter: ^2.5.0
 
 dev_dependencies:
   flutter_test:
