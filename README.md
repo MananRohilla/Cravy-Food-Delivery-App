@@ -39,19 +39,22 @@
       <img src="screenshots/Pizza_top.jpg" alt="Pizza Outlet" 
         style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
       <br/>
-      <strong>Pizza Outlet</strong>
+      <strong>Pizza Outlet</strong><br/>
+      Discover premium pizza restaurant with high-quality food photography and an intuitive interface showing ratings, delivery time, and fees.
     </td>
     <td style="text-align: center;">
       <img src="screenshots/Pizza_bottom.jpg" alt="Pizza Menu" 
         style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
       <br/>
-      <strong>Pizza Menu</strong>
+      <strong>Pizza Menu</strong><br/>
+      Browse through our extensive pizza selection featuring Specialty Pizzas and Classic options with detailed descriptions and prices for each item.
     </td>
     <td style="text-align: center;">
       <img src="screenshots/Restaurant_search.jpg" alt="Restaurant Search" 
         style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
       <br/>
-      <strong>Restaurant Search Screen</strong>
+      <strong>Restaurant Search Screen</strong><br/>
+      Easily find your favorite restaurants with our powerful search feature and convenient quick-access buttons for popular food chains.
     </td>
   </tr>
 
