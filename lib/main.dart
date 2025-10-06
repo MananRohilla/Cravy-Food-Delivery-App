@@ -8,11 +8,12 @@ import 'shared/theme/app_theme.dart';
 import 'state/home/home_bloc.dart';
 
 void main() {
-  const foodCategoryRepository = FoodCategoryRepository();
-  const restaurantRepository = RestaurantRepository();
+  // Initialize repositories (Dependency Inversion Principle)
+  const IFoodCategoryRepository foodCategoryRepository = FoodCategoryRepository();
+  const IRestaurantRepository restaurantRepository = RestaurantRepository();
 
   runApp(
-    const AppScreen(
+    AppScreen(
       foodCategoryRepository: foodCategoryRepository,
       restaurantRepository: restaurantRepository,
     ),
@@ -26,30 +27,36 @@ class AppScreen extends StatelessWidget {
     required this.restaurantRepository,
   });
 
-  final FoodCategoryRepository foodCategoryRepository;
-  final RestaurantRepository restaurantRepository;
+  final IFoodCategoryRepository foodCategoryRepository;
+  final IRestaurantRepository restaurantRepository;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider.value(value: foodCategoryRepository),
-        RepositoryProvider.value(value: restaurantRepository),
+        // Provide repositories using abstract interfaces
+        RepositoryProvider<IFoodCategoryRepository>.value(
+          value: foodCategoryRepository,
+        ),
+        RepositoryProvider<IRestaurantRepository>.value(
+          value: restaurantRepository,
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
-          // Global scope
+          // Global scope BLoC
           BlocProvider(
             create: (context) => HomeBloc(
               foodCategoryRepository: foodCategoryRepository,
               restaurantRepository: restaurantRepository,
-            )..add(LoadHomeEvent()),
+            )..add(const LoadHomeEvent()),
           ),
         ],
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Food Ordering App',
+          debugShowCheckedModeBanner: false,
           theme: AppTheme().themeData,
-          home: HomeScreen(),
+          home: const HomeScreen(),
         ),
       ),
     );

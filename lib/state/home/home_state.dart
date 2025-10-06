@@ -8,6 +8,7 @@ class HomeState extends Equatable {
   final List<Restaurant> popularRestaurants;
   final List<Restaurant> featuredRestaurants;
   final List<dynamic> shopsNearby;
+  final String? errorMessage;
 
   const HomeState({
     this.status = HomeStatus.initial,
@@ -15,6 +16,7 @@ class HomeState extends Equatable {
     this.popularRestaurants = const [],
     this.featuredRestaurants = const [],
     this.shopsNearby = const [],
+    this.errorMessage,
   });
 
   HomeState copyWith({
@@ -23,6 +25,7 @@ class HomeState extends Equatable {
     List<Restaurant>? popularRestaurants,
     List<Restaurant>? featuredRestaurants,
     List<dynamic>? shopsNearby,
+    String? errorMessage,
   }) {
     return HomeState(
       status: status ?? this.status,
@@ -30,6 +33,7 @@ class HomeState extends Equatable {
       popularRestaurants: popularRestaurants ?? this.popularRestaurants,
       featuredRestaurants: featuredRestaurants ?? this.featuredRestaurants,
       shopsNearby: shopsNearby ?? this.shopsNearby,
+      errorMessage: errorMessage,
     );
   }
 
@@ -40,5 +44,6 @@ class HomeState extends Equatable {
         popularRestaurants,
         featuredRestaurants,
         shopsNearby,
+        errorMessage,
       ];
 }

@@ -1,11 +1,28 @@
 import 'package:core/entities.dart';
 
-class FoodCategoryRepository {
+// Custom exception for food category errors
+class FoodCategoryFetchException implements Exception {
+  final String message;
+  FoodCategoryFetchException(this.message);
+  
+  @override
+  String toString() => 'FoodCategoryFetchException: $message';
+}
+
+// Abstract interface (Dependency Inversion Principle)
+abstract class IFoodCategoryRepository {
+  Future<List<FoodCategory>> fetchFoodCategories();
+}
+
+class FoodCategoryRepository implements IFoodCategoryRepository {
   const FoodCategoryRepository();
 
+  @override
   Future<List<FoodCategory>> fetchFoodCategories() async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
+      // Simulate network delay
+      await Future.delayed(const Duration(milliseconds: 500));
+      
       return foodCategories.map((category) {
         return FoodCategory(
           id: category['id']!,
@@ -14,7 +31,7 @@ class FoodCategoryRepository {
         );
       }).toList();
     } catch (err) {
-      throw Exception('Error fetching food categories: $err');
+      throw FoodCategoryFetchException('Error fetching food categories: $err');
     }
   }
 }

@@ -1,35 +1,89 @@
 import 'package:core/entities.dart';
 
-class RestaurantRepository {
+// Custom exceptions for better error handling
+class RestaurantNotFoundException implements Exception {
+  final String message;
+  RestaurantNotFoundException(this.message);
+  
+  @override
+  String toString() => 'RestaurantNotFoundException: $message';
+}
+
+class RestaurantFetchException implements Exception {
+  final String message;
+  RestaurantFetchException(this.message);
+  
+  @override
+  String toString() => 'RestaurantFetchException: $message';
+}
+
+// Abstract repository interface (Dependency Inversion Principle)
+abstract class IRestaurantRepository {
+  Future<Restaurant?> fetchRestaurant({required String restaurantId});
+  Future<List<Restaurant>> fetchRestaurants();
+  Future<List<Restaurant>> fetchPopularRestaurants();
+  Future<List<Restaurant>> fetchFeaturedRestaurants();
+}
+
+class RestaurantRepository implements IRestaurantRepository {
   const RestaurantRepository();
 
+  @override
   Future<Restaurant?> fetchRestaurant({required String restaurantId}) async {
     try {
+      // Simulate network delay
+      await Future.delayed(const Duration(milliseconds: 500));
+      
       final restaurant = restaurants.firstWhere(
         (restaurant) => restaurant['id'] == restaurantId,
+        orElse: () => throw RestaurantNotFoundException(
+          'Restaurant with id $restaurantId not found',
+        ),
       );
+      
       return Restaurant.fromJson(restaurant);
+    } on RestaurantNotFoundException {
+      rethrow;
     } catch (err) {
-      throw Exception('Failed to fetch the restaurant: $err');
+      throw RestaurantFetchException('Failed to fetch restaurant: $err');
     }
   }
 
+  @override
   Future<List<Restaurant>> fetchRestaurants() async {
     try {
+      // Simulate network delay
+      await Future.delayed(const Duration(milliseconds: 800));
+      
       return restaurants
           .map((restaurant) => Restaurant.fromJson(restaurant))
           .toList();
     } catch (err) {
-      throw Exception('Failed to fetch the restaurants: $err');
+      throw RestaurantFetchException('Failed to fetch restaurants: $err');
     }
   }
 
+  @override
   Future<List<Restaurant>> fetchPopularRestaurants() async {
-    return fetchRestaurants();
+    try {
+      final allRestaurants = await fetchRestaurants();
+      // Filter popular restaurants (rating >= 4.0)
+      return allRestaurants.where((r) => (r.rating ?? 0.0) >= 4.0).toList();
+    } 
+    catch (err) {
+      throw RestaurantFetchException('Failed to fetch popular restaurants: $err');
+    }
   }
 
+  @override
   Future<List<Restaurant>> fetchFeaturedRestaurants() async {
-    return fetchRestaurants();
+    try {
+      final allRestaurants = await fetchRestaurants();
+      // Return all for now, could implement featured logic
+      return allRestaurants;
+    } catch (err) {
+      throw RestaurantFetchException('Failed to fetch featured restaurants: $err');
+    }
   }
 }
 

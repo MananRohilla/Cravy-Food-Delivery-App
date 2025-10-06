@@ -15,3 +15,12 @@ class LoadRestaurantDetailsEvent extends RestaurantDetailsEvent {
   @override
   List<Object?> get props => [restaurantId];
 }
+
+class RetryLoadRestaurantDetailsEvent extends RestaurantDetailsEvent {
+  const RetryLoadRestaurantDetailsEvent({required this.restaurantId});
+
+  final String restaurantId;
+
+  @override
+  List<Object?> get props => [restaurantId];
+}
