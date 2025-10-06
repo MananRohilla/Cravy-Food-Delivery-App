@@ -10,7 +10,6 @@ part '_restaurant_details_app_bar.dart';
 part '_restaurant_details_information.dart';
 part '_restaurant_details_featured_menu_items.dart';
 part '_restaurant_details_menu_sections.dart';
-// part '_restaurant_details_error_widget.dart';
 
 class RestaurantDetailsScreen extends StatelessWidget {
   const RestaurantDetailsScreen({
@@ -50,6 +49,7 @@ class RestaurantDetailsView extends StatelessWidget {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min, // Add this
                 children: [
                   CircularProgressIndicator(),
                   SizedBox(height: 16.0),

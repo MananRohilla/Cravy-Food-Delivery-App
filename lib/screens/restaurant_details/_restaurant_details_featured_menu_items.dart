@@ -7,11 +7,13 @@ class _FeaturedMenuItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final colorScheme = Theme.of(context).colorScheme;
-    const height = 185.0;
+    const height = 200.0; // Increase height from 185.0 to 200.0
     return BlocBuilder<RestaurantDetailsBloc, RestaurantDetailsState>(
       builder: (context, state) {
         return (state.restaurant?.featuredMenuItems.isNotEmpty ?? false)
             ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // Add this
+                mainAxisSize: MainAxisSize.min, // Add this
                 children: [
                   const SectionTitle(title: 'Featured Items'),
                   SizedBox(
@@ -64,45 +66,58 @@ class FeaturedMenuItemCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min, // Add this to prevent overflow
         children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Image.network(
-                  menuItem.imageUrl!,
-                  height: 125,
-                  width: size.width,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                right: 4.0,
-                bottom: 4.0,
-                child: IconButton.filled(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded( // Wrap Stack with Expanded
+            flex: 3, // Give more space to the image
+            child: Stack(
               children: [
-                Text(
-                  menuItem.name,
-                  style: textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network(
+                    menuItem.imageUrl!,
+                    height: 125,
+                    width: size.width,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Text(
-                  '\$${menuItem.price}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Positioned(
+                  right: 4.0,
+                  bottom: 4.0,
+                  child: IconButton.filled(
+                    onPressed: () {},
+                    icon: const Icon(Icons.add),
+                  ),
                 ),
               ],
+            ),
+          ),
+          Flexible( // Change Padding to Flexible
+            flex: 1, // Give less space to text content
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min, // Add this
+                children: [
+                  Flexible( // Wrap text with Flexible
+                    child: Text(
+                      menuItem.name,
+                      style: textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1, // Add max lines
+                      overflow: TextOverflow.ellipsis, // Add overflow handling
+                    ),
+                  ),
+                  Text(
+                    '\$${menuItem.price}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: textTheme.bodyMedium, // Add explicit style
+                  ),
+                ],
+              ),
             ),
           ),
         ],

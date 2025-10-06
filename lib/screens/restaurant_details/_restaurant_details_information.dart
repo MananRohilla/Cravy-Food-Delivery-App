@@ -50,7 +50,7 @@ class _RestaurantInformation extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        '\$0.49 Delivery fee',
+                        '\Rs 49 Delivery fee',
                         style: textTheme.bodyMedium!
                             .copyWith(fontWeight: FontWeight.bold),
                       ),

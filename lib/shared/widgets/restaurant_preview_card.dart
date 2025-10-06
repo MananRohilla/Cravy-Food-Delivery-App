@@ -32,69 +32,90 @@ class RestaurantPreviewCard extends StatelessWidget {
       },
       child: Container(
         width: size.width,
-        margin: const EdgeInsets.only(bottom: 8.0, right: 8.0),
+        margin: const EdgeInsets.only(bottom: 16.0, right: 8.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    restaurant.imageUrl!,
-                    height: 125,
-                    width: size.width,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  left: 8.0,
-                  child: Chip(
-                    side: BorderSide.none,
-                    labelPadding: EdgeInsets.zero,
-                    label: Text(
-                      '2 offers available',
-                      style: textTheme.bodySmall,
+            SizedBox( // Wrap Stack in SizedBox with fixed height
+              height: 125.0,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      restaurant.imageUrl!,
+                      width: size.width,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              ],
+                  Positioned(
+                    left: 8.0,
+                    top: 8.0,
+                    child: Chip(
+                      visualDensity: VisualDensity.compact, // Add this
+                      side: BorderSide.none,
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4.0), // Reduce padding
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      label: Text(
+                        '2 offers available',
+                        style: textTheme.bodySmall?.copyWith(
+                          fontSize: 10.0, // Reduce font size
+                          height: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // Reduce vertical padding
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           restaurant.name,
-                          style: textTheme.bodyLarge!.copyWith(
+                          style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
+                            height: 0.9, // Reduce line height further
+                            fontSize: 13.0, // Slightly smaller font
                           ),
-                        ),
-                        const Text(
-                          '\$0.49 Delivery Fee • 25-35 min',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          '\Rs 49 Delivery Fee • 25-35 min',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: textTheme.bodySmall?.copyWith(
+                            height: 0.9, // Reduce line height
+                            fontSize: 10.0, // Smaller font size
+                          ),
                         ),
                       ],
                     ),
                   ),
+                  const SizedBox(width: 8.0),
                   CircleAvatar(
-                    radius: 16.0,
+                    radius: 13.0, // Reduce radius slightly
                     backgroundColor: colorScheme.surfaceVariant,
                     foregroundColor: colorScheme.primary,
                     child: Text(
                       restaurant.rating.toString(),
-                      style: textTheme.bodySmall!
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 9.0, // Smaller font size
+                        height: 1.0,
+                      ),
                     ),
                   ),
                 ],

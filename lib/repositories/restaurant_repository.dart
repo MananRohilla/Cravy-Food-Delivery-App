@@ -90,10 +90,10 @@ class RestaurantRepository implements IRestaurantRepository {
 final restaurants = [
   {
     'id': 'restaurant_1',
-    'name': 'Mad Pizza',
-    'description': 'The best pizza in town',
+    'name': 'Pizza Villa',
+    'description': 'The best pizza in Delhi',
     'category': {
-      'id': 'category_1',
+      'id': 'Pizza Category',
       "name": "Pizza",
       'imageUrl': "assets/images/pizza.png",
     },
@@ -107,19 +107,19 @@ final restaurants = [
       {
         'id': 'working_hours_1',
         'startTime': '08:00',
-        'endTime': '17:00',
+        'endTime': '10:00',
         'dayOfWeek': 'Monday',
       },
       {
         'id': 'working_hours_2',
         'startTime': '08:00',
-        'endTime': '17:00',
+        'endTime': '10:00',
         'dayOfWeek': 'Tuesday',
       },
       {
         'id': 'working_hours_3',
         'startTime': '08:00',
-        'endTime': '17:00',
+        'endTime': '10:00',
         'dayOfWeek': 'Wednesday',
       },
     ],
@@ -366,19 +366,19 @@ final restaurants = [
       {
         'id': 'working_hours_4',
         'startTime': '08:00',
-        'endTime': '17:00',
+        'endTime': '10:00',
         'dayOfWeek': 'Thursday',
       },
       {
         'id': 'working_hours_5',
         'startTime': '08:00',
-        'endTime': '17:00',
+        'endTime': '10:00',
         'dayOfWeek': 'Friday',
       },
       {
         'id': 'working_hours_6',
         'startTime': '08:00',
-        'endTime': '17:00',
+        'endTime': '10:00',
         'dayOfWeek': 'Saturday',
       }
     ],
