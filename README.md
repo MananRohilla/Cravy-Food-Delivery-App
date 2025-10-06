@@ -36,19 +36,23 @@
   </tr>
   <tr>
     <td style="text-align: center;">
-      <img src="screenshots/Pizza_top.jpg" alt="Cart Screen" style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/><br/>
-      <strong>Pizza Outlet</strong><br/>
+      <img src="screenshots/Pizza_top.jpg" alt="Pizza Outlet" 
+        style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
+      <br/>
+      <strong>Pizza Outlet</strong>
     </td>
     <td style="text-align: center;">
-      <img src="screenshots/Pizza_bottom.jpg" alt="Order Tracking Screen" style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/><br/>
-      <strong>Pizza menu</strong><br/>
+      <img src="screenshots/Pizza_bottom.jpg" alt="Pizza Menu" 
+        style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
+      <br/>
+      <strong>Pizza Menu</strong>
     </td>
-    <td></td>
     <td style="text-align: center;">
-      <img src="screenshots/Restaurant_search.jpg" alt="Order Tracking Screen" style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/><br/>
-      <strong>Restaurant Search Screen</strong><br/>
+      <img src="screenshots/Restaurant_search.jpg" alt="Restaurant Search" 
+        style="width: 200px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);"/>
+      <br/>
+      <strong>Restaurant Search Screen</strong>
     </td>
-    <td></td>
   </tr>
 
   
